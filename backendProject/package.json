@@ -2,7 +2,7 @@
   "name": "backendproject",
   "version": "1.0.0",
   "description": "backend course project",
-  "type":"module",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/index.js"
@@ -13,5 +13,8 @@
     "project"
   ],
   "author": "Nouman khan",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^3.2.5"
+  }
 }
