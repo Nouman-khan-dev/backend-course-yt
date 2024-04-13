@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-
+const uri =
+    'mongodb+srv://developernomi68:nouman12@cluster0.xrwhmrp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 let URI =
     'mongodb+srv://developernomi68:nouman12@cluster0.xrwhmrp.mongodb.net/';
 
