@@ -1,18 +1,20 @@
 // import { Express, Router } from 'express';
 import express from 'express';
+import {
+    home,
+    hello,
+    auth,
+    facebook,
+} from '../controllers/auth-controller.js';
 const app = express();
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.status(200).send('<h1>This is nomi khan with backend</h1>');
-});
+router.get('/', home);
 
-router.get('/auth', (req, res) => {
-    res.status(200).send('<h1>This backend course </h1>');
-});
+router.get('/hello', hello);
+
+router.get('/auth', auth);
 //
-router.route('/fb').get((req, res) => {
-    res.status(200).send('<h1>This my facebook</h1>');
-});
+router.route('/fb').get(facebook);
 
 export default router;
