@@ -8,7 +8,7 @@ app.use(express.urlencoded({ extend: true }));
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
-    res.render('Hi Backend');
+    res.render('index');
 });
 
 app.listen(port, function () {
