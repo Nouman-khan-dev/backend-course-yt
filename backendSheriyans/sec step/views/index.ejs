@@ -9,25 +9,47 @@
         <title>Document</title>
     </head>
     <body>
-        <div class="w-full min-h-screen bg-zinc-500">
-            <div class="form w-[600px] mx-auto">
+        <div class="w-full min-h-screen bg-zinc-800 text-white">
+            <div class="form w-full mx-auto py-4 px-6">
                 <form
-                    action=""
-                    class="w-full flex grow flex-col items-center gap-1">
+                    action="create"
+                    method="post"
+                    class="w-full flex grow flex-col items-start gap-3">
                     <input
-                        class="w-full p-1"
+                        name="title"
+                        class="w-full p-1 bg-zinc-600"
                         type="text"
                         placeholder="Title" />
                     <textarea
-                        class="w-full p-2"
+                        name="details"
+                        class="w-full p-2 bg-zinc-600"
                         placeholder="Text here.."
                         cols="30"
-                        rows="10"></textarea>
+                        rows="5"
+                        reise="false"></textarea>
                     <input
-                        class="bg-blue-500 text-white p-2"
+                        class="bg-blue-500 text-white p-2 rounded"
                         type="submit"
                         value="Create task" />
                 </form>
+            </div>
+            <div class="container w-full p-4">
+                <h1 class="text-4xl mb-5">Tasks:</h1>
+                <div class="w-full flex gap-4">
+                    <% if(files.length > 0){%>
+                    <%files.forEach(function(fl){ %>
+                    <div
+                        class="item w-[300px] h-[200px] bg-zinc-600 rounded-lg p-2 overflow-y-auto overflow-x-hidden">
+                        <h1 class="text-xl font-bold"> <% fl %> </h1>
+                        <p>
+                    </div>
+                     <% })}else{%>
+
+                    <h1 class="text-4xl font-bold text-white hidden">
+                        No taks yet
+                    </h1>
+                     <% }%>
+                </div>
             </div>
         </div>
     </body>
