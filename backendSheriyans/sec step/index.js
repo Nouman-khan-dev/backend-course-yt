@@ -14,8 +14,14 @@ app.get('/', (req, res) => {
     fs.readdir(`./files`, function (err, files) {
         console.log(files);
         res.render('index', { files: files });
-        console.log(files)
+        // console.log(files)
     });
+});
+app.get('/files/:filename', (req, res) => {
+    fs.readFile(`./files/${req.params.filename}`,"utf-8",function(err,filedata){
+        res.render("show",{filename:req.params.filename,filedata})
+    })
+   
 });
 
 app.post('/create', (req, res) => {
