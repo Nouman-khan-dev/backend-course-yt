@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="w-full h-screen bg-zinc-800">
+  <div class="form w-[600px] mx-auto py-4 px-6">
+    <form
+        action="edit"
+        method="post"
+        class="w-full flex grow flex-col items-start gap-3">
+        <input
+            name="previous"
+            value="<%=filename%>"
+            class="w-full p-1 bg-zinc-600 text-gray-400"
+            type="text"
+            disabled
+            placeholder="Title" />
+        <textarea
+            name="new"
+            class="w-full p-2 bg-zinc-600 text-white .placeholder-white"
+            placeholder="Text here.."
+            cols="30"
+            rows="5"
+            reise="false"></textarea>
+        <input
+            class="bg-orange-400 text-white p-2 rounded"
+            type="submit"
+            value="Update" />
+    </form>
+</div>
+</body>
+</html>
