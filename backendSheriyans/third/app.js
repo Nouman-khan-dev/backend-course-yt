@@ -14,6 +14,10 @@ app.get("/create", async (req, res) => {
   res.send(newUser);
 });
 
+app.get("/fb", (req, res) => {
+  res.send("this is fb page");
+});
+
 app.listen(3000, () => {
   console.log("your app is listening on 3000");
 });
