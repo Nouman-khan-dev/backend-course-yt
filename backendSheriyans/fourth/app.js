@@ -14,8 +14,15 @@ app.get("/", (req, res) => {
 app.get("/read", async (req, res) => {
   let users = await userModel.find();
   res.render("read", { users });
-  console.log(users);
 });
+
+app.get("/delete/:id", async function (req, res) {
+  const user = await userModel.findOneAndDelete({
+    _id: req.params.id,
+  });
+  res.redirect("/read");
+});
+
 app.post("/create", async (req, res) => {
   const { name, email, password } = req.body;
   let user = await userModel.create({
@@ -23,8 +30,7 @@ app.post("/create", async (req, res) => {
     email: email,
     password: password,
   });
-  res.send(user);
-  console.log(user);
+  res.redirect("/read");
 });
 
 app.listen(3000, function () {
