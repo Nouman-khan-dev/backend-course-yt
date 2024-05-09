@@ -34,7 +34,7 @@
                 <tr class="border-b">
                   <th class="text-left p-3 px-5">Name</th>
                   <th class="text-left p-3 px-5">Email</th>
-                  <th class="text-left p-3 px-5">Role</th>
+                  <th class="text-left p-3 px-5">password</th>
                   <th></th>
                 </tr>
                 <% if(users.length > 0 ){%>
@@ -53,16 +53,15 @@
                         class="bg-transparent" ><%=user.email%></h3>
                     </td>
                     <td class="p-3 px-5">
-                      <select value="user.role" class="bg-transparent">
-                        <option value="user">user</option>
-                        <option value="admin">admin</option>
-                      </select>
+                      <p value="user.role" class="bg-transparent">
+                        <%=user.password%>
+                    </p>
                     </td>
                     <td class="p-3 px-5 flex justify-end">
                       <button
                         type="button"
                         class="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">
-                        Edit</button
+                        <a href="/edit/<%=user._id%>">Edit</a></button
                       ><button
                         type="button"
                         class="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">
