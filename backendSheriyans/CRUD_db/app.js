@@ -23,10 +23,6 @@ app.get("/delete/:id", async function (req, res) {
   res.redirect("/read");
 });
 
-app.get("/edit/:id", function (req, res) {
-  res.render("update", { id: req.params.id });
-});
-
 app.post("/create", async (req, res) => {
   const { name, email, password } = req.body;
   let user = await userModel.create({
@@ -35,6 +31,11 @@ app.post("/create", async (req, res) => {
     password: password,
   });
   res.redirect("/read");
+});
+
+app.get("/edit/:id", async function (req, res) {
+  const user = await userModel.findOne({ _id: req.params.id });
+  res.render("update", { user });
 });
 
 app.post("/update/:id", async function (req, res) {

@@ -17,12 +17,12 @@
     <h1 class="text-4xl font-bold pl-2 pt-2">Update here</h1>
     <div class="w-full">
       <form
-              action="/update/<%=id%>"
+              action="/update/<%=user._id%>"
               method="post"
               class="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96 mx-auto ">
               <div class="mb-4 flex flex-col gap-6">
                 <div class="name w-full rounded-md border border-blue-gray-400 bg-red-200 px-3 py-3">
-                  <p class="name">NomiKhan</p>
+                  <p class="name"><%=user.name%></p>
                 </div>
                 <div class="relative h-11 w-full min-w-[200px]">
                   <input
@@ -36,7 +36,7 @@
                   </label>
                 </div>
                 <div class="oldEmail w-full rounded-md border border-blue-gray-400 bg-red-200 px-3 py-3">
-                  <p class="email">nomi@gmail.com3</p>
+                  <p class="email"><%=user.email%></p>
                 </div>
                 <div class="relative h-11 w-full min-w-[200px]">
                   <input
