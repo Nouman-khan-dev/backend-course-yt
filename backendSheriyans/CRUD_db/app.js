@@ -46,7 +46,7 @@ app.post("/update/:id", async function (req, res) {
       email: req.body.email,
       password: req.body.password,
     },
-    { returnOrgnal: false }
+    { new: true }
   );
 
   res.redirect("/read");
