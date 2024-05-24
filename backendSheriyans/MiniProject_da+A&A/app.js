@@ -85,13 +85,27 @@ app.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
+app.get("/profile", isLoggedIn, async (req, res) => {
+  const email = req.user.email;
+  const user = await userModel.findOne({ email });
+
+  email
+    ? res.render("profile", { user })
+    : res.send("You must have to logi first");
+  console.log(user);
+});
+
 function isLoggedIn(req, res, next) {
-  if (req.cookies.toke === "") res.send("your must be logged in");
-  else {
+  if (!req.cookies.token) {
+    res.send("you must be logged in");
+    res.redirect("/login");
+    console.log("empty cookie: ", req.cookies.token);
+  } else {
     let data = jwt.verify(req.cookies.token, "shhhh.");
     req.user = data;
+    console.log("else: ", req.cookies.token);
+    next();
   }
-  next();
 }
 
 app.listen(3000, () => {
