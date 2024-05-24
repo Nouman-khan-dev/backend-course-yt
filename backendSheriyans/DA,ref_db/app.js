@@ -62,23 +62,37 @@ app.post("/login", async (req, res) => {
     password,
     user.password,
     (err, result) => {
-      if (err)
+      if (result) {
+        let token = jwt.sign({ email, password }, "shhhh.");
+        res.cookie("token", token);
+        res.redirect("/");
+      } else if (err) {
         console.log("error while checking the password:: ", err);
-      else console.log(result);
+        res.send(
+          "incorrect email or password, please enter a valid email or password"
+        );
+      } else if (!result) {
+        res.send(
+          "incorrect email or password, please enter a valid email or password"
+        );
+      }
     }
   );
-
-  if (validPassword) {
-    let token = jwt.sign({ email, password }, "shhhh.");
-    res.cookie("token", token);
-    res.redirect("/");
-  }
 });
 
 app.get("/logout", (req, res) => {
   res.clearCookie("token");
   res.redirect("/");
 });
+
+function isLoggedIn(req, res, next) {
+  if (req.cookies.toke === "") res.send("your must be logged in");
+  else {
+    let data = jwt.verify(req.cookies.token, "shhhh.");
+    req.user = data;
+  }
+  next();
+}
 
 app.listen(3000, () => {
   console.log("app is listening on port :: 3000");
