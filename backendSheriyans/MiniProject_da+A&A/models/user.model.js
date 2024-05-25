@@ -11,17 +11,14 @@ mongoose
   );
 
 const userSchema = mongoose.Schema({
-  userame: {
-    type: String,
-    require: true,
-  },
+  name: String,
+
   email: {
     type: String,
     require: true,
   },
   password: {
     type: String,
-    require: true,
   },
   post: [
     {

@@ -12,30 +12,31 @@ app.use(express.urlencoded({ extended: true }));
 // app.use(express.static(__dirname,))
 app.use(cookieParser());
 
+// ********************== / ==***********
+
 app.get("/", async (req, res) => {
   const users = await userModel.find();
 
   res.render("index", { users });
 });
-
-app.get("/signin", (req, res) => {
-  res.render("signIn");
+app.get("/register", (req, res) => {
+  res.render("register");
 });
 
+// ********************== register ==***********
+
 app.post("/register", async (req, res) => {
-  const { email, password } = req.body;
-
+  const { email, password, name } = req.body;
   let user = await userModel.findOne({ email });
-
   if (user) return res.status(500).send("User already registered");
 
   let salt = bcrypt.genSaltSync(10);
   let hash = bcrypt.hashSync(password, salt);
 
   const newUser = await userModel.create({
-    username: req.body.username,
-    email,
+    name: name,
     password: hash,
+    email,
   });
 
   let token = jwt.sign({ email, password }, "shhhh.");
@@ -48,6 +49,8 @@ app.post("/register", async (req, res) => {
 app.get("/login", (req, res) => {
   res.render("login");
 });
+
+// ********************== Login==***********
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
@@ -65,7 +68,7 @@ app.post("/login", async (req, res) => {
       if (result) {
         let token = jwt.sign({ email, password }, "shhhh.");
         res.cookie("token", token);
-        res.redirect("/");
+        res.redirect("/profile");
       } else if (err) {
         console.log("error while checking the password:: ", err);
         res.send(
@@ -79,12 +82,13 @@ app.post("/login", async (req, res) => {
     }
   );
 });
+// ********************== LOG OUT ==***********
 
 app.get("/logout", (req, res) => {
   res.clearCookie("token");
   res.redirect("/");
 });
-
+// ********************== PROFILE==***********
 app.get("/profile", isLoggedIn, async (req, res) => {
   const email = req.user.email;
   const user = await userModel.findOne({ email });
@@ -92,18 +96,14 @@ app.get("/profile", isLoggedIn, async (req, res) => {
   email
     ? res.render("profile", { user })
     : res.send("You must have to logi first");
-  console.log(user);
 });
 
 function isLoggedIn(req, res, next) {
   if (!req.cookies.token) {
-    res.send("you must be logged in");
     res.redirect("/login");
-    console.log("empty cookie: ", req.cookies.token);
   } else {
     let data = jwt.verify(req.cookies.token, "shhhh.");
     req.user = data;
-    console.log("else: ", req.cookies.token);
     next();
   }
 }
