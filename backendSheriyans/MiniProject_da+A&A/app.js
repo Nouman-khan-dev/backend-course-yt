@@ -1,6 +1,7 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const userModel = require("./models/user.model");
+const postModel = require("./models/post.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -92,10 +93,13 @@ app.get("/logout", (req, res) => {
 app.get("/profile", isLoggedIn, async (req, res) => {
   const email = req.user.email;
   const user = await userModel.findOne({ email });
-
+  //   const posts = awaitpostModel.find().populate();
+  // user.populate())
+  // console.log(user);
   email
     ? res.render("profile", { user })
-    : res.send("You must have to logi first");
+    : res.send("You must have to login first");
+  // console.log(user);
 });
 
 function isLoggedIn(req, res, next) {
@@ -107,6 +111,29 @@ function isLoggedIn(req, res, next) {
     next();
   }
 }
+
+app.post("/create-post", isLoggedIn, async (req, res) => {
+  const { title, content } = req.body;
+  const user = await userModel
+    .findOne({ email: req.user.email })
+    .then((result) => console.log("then", result))
+    .catch((err) => console.log("err", err));
+  const post = await postModel
+    .create({
+      author: user._id,
+      title,
+      content,
+    })
+    .then((result) => console.log("post relust", result))
+    .catch((err) =>
+      console.log("error while creating a post error: ", err)
+    );
+
+  console.log("user :", user);
+  user.posts.push(post._id);
+  await user.save();
+  res.redirect("/profile");
+});
 
 app.listen(3000, () => {
   console.log("app is listening on port :: 3000");

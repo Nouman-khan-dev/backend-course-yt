@@ -20,10 +20,10 @@ const userSchema = mongoose.Schema({
   password: {
     type: String,
   },
-  post: [
+  posts: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "post",
+      ref: "posts",
     },
   ],
 });

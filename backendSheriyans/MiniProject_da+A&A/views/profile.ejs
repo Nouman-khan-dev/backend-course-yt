@@ -42,17 +42,17 @@
       <!-- ***************************** -->
       <div class="px-3">
         <form
-          action="/#"
-          method=""
+          action="/create-post"
+          method="post"
           class="mb-0 mt-6 space-y-4 bg-zinc-300 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8">
           <p class="text-center text-lg font-medium">Create a post</p>
 
           <div>
-            <label for="name" class="sr-only">Title</label>
+            <label for="title" class="sr-only">Title</label>
 
             <div class="relative">
               <input
-                name="name"
+                name="title"
                 type="text"
                 class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-xl"
                 placeholder="Title" />
@@ -82,6 +82,7 @@
             </label>
 
             <textarea
+              name="content"
               id="OrderNotes"
               class="mt-2 w-full rounded-lg border-gray-200 align-top shadow-sm sm:text-sm p-3"
               rows="4"
@@ -94,6 +95,36 @@
             Submit
           </button>
         </form>
+      </div>
+      <h1 class="px-3 py-5 text-3xl font-bold">Your posts</h1>
+      <hr />
+
+      <div class="flex w-full gap-4 items-center justify-start p-7">
+        <!-- ********************************* -->
+        <div
+          class="w-[350px] h-[200px] relative bg-gray-700 text-white rounded-xl p-3 overflow-hidden">
+          <h3 class="text-xl font-semibold">Heading goes Here</h3>
+          <hr />
+          <p class="content pt-2">
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+            Voluptates quia itaque consectetur ex! Nam, magnam eaque!
+            Quos
+          </p>
+          <div
+            class="buttons absolute bottom-[0px] w-full left-0 bg-gray-800 text-blue-400 flex justify-between items-center">
+            <button
+              class="border-black border-2 p-1 px-3 bg-gray-600">
+              Like
+            </button>
+            <div class="date">12,12,2024</div>
+            <button
+              class="border-black border-2 p-1 px-3 bg-gray-600">
+              Edit
+            </button>
+          </div>
+        </div>
+
+        <!-- ********************************* -->
       </div>
     </div>
   </body>
