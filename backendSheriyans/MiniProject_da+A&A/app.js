@@ -98,7 +98,6 @@ app.get("/profile", isLoggedIn, async (req, res) => {
   email
     ? res.render("profile", { user, posts })
     : res.send("You must have to login first");
-  // console.log(user);
 });
 
 function isLoggedIn(req, res, next) {
@@ -124,6 +123,13 @@ app.post("/create-post", isLoggedIn, async (req, res) => {
   user.posts.push(post._id);
   await user.save();
   res.redirect("/profile");
+});
+app.get("/like/:id", isLoggedIn, async (req, res) => {
+  let id = req.params.id;
+  const post = await postModel.findOne({ _id: id });
+
+  post.likes.push(req.user._id);
+  req.redirect("/profile");
 });
 
 app.listen(3000, () => {
