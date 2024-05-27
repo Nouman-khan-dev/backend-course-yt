@@ -99,30 +99,35 @@
       <h1 class="px-3 py-5 text-3xl font-bold">Your posts</h1>
       <hr />
 
-      <div class="flex w-full gap-4 items-center justify-start p-7">
+      <div
+        class="flex w-full flex-wrap gap-4 items-center justify-start p-7">
         <!-- ********************************* -->
+        <%posts.reverse().forEach((post)=>{%>
         <div
           class="w-[350px] h-[200px] relative bg-gray-700 text-white rounded-xl p-3 overflow-hidden">
-          <h3 class="text-xl font-semibold">Heading goes Here</h3>
+          <div class="flex items-center justify-between">
+            <h3 class="text-xl font-semibold"><%=post.title%></h3>
+            <span class="text-sky-400 font-semibold"
+              ><%=user.name%></span
+            >
+          </div>
+
           <hr />
-          <p class="content pt-2">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-            Voluptates quia itaque consectetur ex! Nam, magnam eaque!
-            Quos
-          </p>
+          <p class="content pt-2"><%=post.content%>></p>
           <div
             class="buttons absolute bottom-[0px] w-full left-0 bg-gray-800 text-blue-400 flex justify-between items-center">
             <button
               class="border-black border-2 p-1 px-3 bg-gray-600">
               Like
             </button>
-            <div class="date">12,12,2024</div>
+            <div class="date"><%=post.date%>></div>
             <button
               class="border-black border-2 p-1 px-3 bg-gray-600">
               Edit
             </button>
           </div>
         </div>
+        <%})%>
 
         <!-- ********************************* -->
       </div>

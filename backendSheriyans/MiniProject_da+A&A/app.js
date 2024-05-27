@@ -93,11 +93,10 @@ app.get("/logout", (req, res) => {
 app.get("/profile", isLoggedIn, async (req, res) => {
   const email = req.user.email;
   const user = await userModel.findOne({ email });
-  //   const posts = awaitpostModel.find().populate();
-  // user.populate())
-  // console.log(user);
+  const posts = await postModel.find().populate();
+
   email
-    ? res.render("profile", { user })
+    ? res.render("profile", { user, posts })
     : res.send("You must have to login first");
   // console.log(user);
 });
@@ -114,22 +113,14 @@ function isLoggedIn(req, res, next) {
 
 app.post("/create-post", isLoggedIn, async (req, res) => {
   const { title, content } = req.body;
-  const user = await userModel
-    .findOne({ email: req.user.email })
-    .then((result) => console.log("then", result))
-    .catch((err) => console.log("err", err));
-  const post = await postModel
-    .create({
-      author: user._id,
-      title,
-      content,
-    })
-    .then((result) => console.log("post relust", result))
-    .catch((err) =>
-      console.log("error while creating a post error: ", err)
-    );
+  const user = await userModel.findOne({ email: req.user.email });
 
-  console.log("user :", user);
+  const post = await postModel.create({
+    author: user._id,
+    title,
+    content,
+  });
+
   user.posts.push(post._id);
   await user.save();
   res.redirect("/profile");
