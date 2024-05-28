@@ -113,17 +113,25 @@
           </div>
 
           <hr />
-          <p class="content pt-2"><%=post.content%>></p>
+          <p class="content pt-2"><%=post.content%></p>
           <div
             class="buttons absolute bottom-[0px] w-full left-0 bg-gray-800 text-blue-400 flex justify-between items-center">
+            <div class="">
+              <button
+                class="border-black border-2 p-1 w-[90px] px-3 bg-gray-600">
+                <a href="/like/<%=post._id%>"
+                  ><%=post.likes.includes(user.id) ?"Un Like":"Like"
+                  %>
+                </a>
+              </button>
+              <span class="text-center px-2"
+                ><%=post.likes.length%></span
+              >
+            </div>
+            <div class="date"><%=post.date%></div>
             <button
               class="border-black border-2 p-1 px-3 bg-gray-600">
-              <a href="/like/<%=post._id%>"> Like </a>
-            </button>
-            <div class="date"><%=post.date%>></div>
-            <button
-              class="border-black border-2 p-1 px-3 bg-gray-600">
-              Edit
+              <a href="/edit/<%=post._id%>">Edit</a>
             </button>
           </div>
         </div>

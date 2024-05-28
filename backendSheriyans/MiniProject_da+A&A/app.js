@@ -127,9 +127,43 @@ app.post("/create-post", isLoggedIn, async (req, res) => {
 app.get("/like/:id", isLoggedIn, async (req, res) => {
   let id = req.params.id;
   const post = await postModel.findOne({ _id: id });
+  const user = await userModel.findOne({ email: req.user.email });
 
-  post.likes.push(req.user._id);
-  req.redirect("/profile");
+  if (post.likes.includes(user._id)) {
+    let index = post.likes.indexOf(user._id);
+
+    post.likes.splice(index, 1);
+    post.save();
+    console.log("index: ", index, " post.likes", post.likes);
+  } else {
+    post.likes.push(user._id);
+    post.save();
+    console.log("post.likes", post.likes);
+  }
+
+  res.redirect("/profile");
+});
+
+app.get("/edit/:id", isLoggedIn, async (req, res) => {
+  const post = await postModel.findOne({ _id: req.params.id });
+  const user = await userModel.findOne({ email: req.user.email });
+
+  res.render("edit", { post, id: post._id });
+
+  console.log("post update: old ", post);
+});
+app.post("/update/:id", async (req, res) => {
+  const updatedPost = await postModel.findOneAndUpdate(
+    { _id: req.params.id },
+    {
+      title: req.body.title,
+      content: req.body.content,
+    },
+    { new: true }
+  );
+  // await updatedPost.save();
+  console.log(" updated post  : ", updatedPost);
+  res.redirect("/profile");
 });
 
 app.listen(3000, () => {
