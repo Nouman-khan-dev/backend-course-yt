@@ -166,6 +166,9 @@ app.post("/update/:id", async (req, res) => {
   res.redirect("/profile");
 });
 
+app.get("/multer", (req, res) => {
+  res.render("multerUpload");
+});
 app.listen(3000, () => {
   console.log("app is listening on port :: 3000");
 });
