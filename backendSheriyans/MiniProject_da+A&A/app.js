@@ -4,6 +4,9 @@ const userModel = require("./models/user.model");
 const postModel = require("./models/post.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
+const path = require("path");
+const multer = require("multer");
 
 const app = express();
 
@@ -13,6 +16,21 @@ app.use(express.urlencoded({ extended: true }));
 // app.use(express.static(__dirname,))
 app.use(cookieParser());
 
+//*******************==multer==********************
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./public/images/uploads");
+  },
+  filename: function (req, file, cb) {
+    crypto.randomBytes(12, (err, bytes) => {
+      const fn =
+        bytes.toString("hex") + path.extname(file.originalname);
+      cb(null, fn);
+    });
+  },
+});
+
+const upload = multer({ storage: storage });
 // ********************== / ==***********
 
 app.get("/", async (req, res) => {
@@ -20,11 +38,19 @@ app.get("/", async (req, res) => {
 
   res.render("index", { users });
 });
+// ********************== upload post ==***********
+
+app.post("/upload", upload.single("image"), (req, res) => {
+  console.log(req.file);
+  res.redirect("/multer");
+});
+// ********************== register get ==***********
+
 app.get("/register", (req, res) => {
   res.render("register");
 });
 
-// ********************== register ==***********
+// ********************== register post ==***********
 
 app.post("/register", async (req, res) => {
   const { email, password, name } = req.body;
