@@ -7,30 +7,31 @@ const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const path = require("path");
 const multer = require("multer");
+const upload = require("./config/multerconfig");
 
 const app = express();
 
 app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// app.use(express.static(__dirname,))
+app.use(express.static(path.join(__dirname, "public")));
 app.use(cookieParser());
 
 //*******************==multer==********************
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./public/images/uploads");
-  },
-  filename: function (req, file, cb) {
-    crypto.randomBytes(12, (err, bytes) => {
-      const fn =
-        bytes.toString("hex") + path.extname(file.originalname);
-      cb(null, fn);
-    });
-  },
-});
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, "./public/images/uploads");
+//   },
+//   filename: function (req, file, cb) {
+//     crypto.randomBytes(12, (err, bytes) => {
+//       const fn =
+//         bytes.toString("hex") + path.extname(file.originalname);
+//       cb(null, fn);
+//     });
+//   },
+// });
 
-const upload = multer({ storage: storage });
+// const upload = multer({ storage: storage });
 // ********************== / ==***********
 
 app.get("/", async (req, res) => {
@@ -38,12 +39,7 @@ app.get("/", async (req, res) => {
 
   res.render("index", { users });
 });
-// ********************== upload post ==***********
 
-app.post("/upload", upload.single("image"), (req, res) => {
-  console.log(req.file);
-  res.redirect("/multer");
-});
 // ********************== register get ==***********
 
 app.get("/register", (req, res) => {
@@ -192,9 +188,33 @@ app.post("/update/:id", async (req, res) => {
   res.redirect("/profile");
 });
 
-app.get("/multer", (req, res) => {
-  res.render("multerUpload");
+// ********************== profile upload  ==***********
+
+app.get("/profile/upload", (req, res) => {
+  res.render("profileImgUpload");
 });
+// ********************== upload post ==***********
+
+app.post(
+  "/upload",
+  isLoggedIn,
+  upload.single("image"),
+  async (req, res) => {
+    res.redirect("/profile");
+
+    const newUser = await userModel.findOneAndUpdate(
+      { email: req.user.email },
+      {
+        profileImg: req.file.filename,
+      },
+      { new: true }
+    );
+    console.log("new User: ", req.file);
+
+    await newUser.save();
+  }
+);
+
 app.listen(3000, () => {
   console.log("app is listening on port :: 3000");
 });
