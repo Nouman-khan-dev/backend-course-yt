@@ -38,7 +38,13 @@ const register = async (req, res) => {
       password,
       phone,
     });
-    res.status(201).json({ newUser });
+
+    res.status(201).json({
+      msg: "registeration successfull!",
+      newUser,
+      token: await newUser.generateToken(),
+      userId: newUser._id.toString(),
+    });
   } catch (error) {
     console.log("error:", error);
   }
