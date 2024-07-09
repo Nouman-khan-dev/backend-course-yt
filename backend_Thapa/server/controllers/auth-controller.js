@@ -69,30 +69,26 @@ const login = async (req, res) => {
   // ****
   //
   try {
-    const user = await User.findOne({
-      $or: [{ username }, { email }],
-    });
+    const user = await User.findOne({ email });
     if (!user) {
       return res
         .status(400)
         .json({ message: "User does not exist!" });
     }
-    const isPasswordCorrect = await bcrypt.compare(
-      password,
-      user.password
-    );
-    if (!isPasswordCorrect) {
+    const isPasswordCorrect = await user.verifyPassword(password);
+    if (isPasswordCorrect) {
+      // const token = await user.generateToken();
+      // console.log(awaituser.generateToken());
+      return res.status(200).json({
+        msg: "login successfull!",
+        user: user,
+        token: await user.generateToken(),
+      });
+    } else {
       return res
         .status(400)
         .json({ message: "Invalid credentials!" });
     }
-    return res
-      .status(200)
-      .json({
-        msg: "login successfull!",
-        user: user,
-      })
-      .cookie("token", await user.generateToken());
   } catch (error) {
     res.status(500).json("internel server error: ", error);
   }
