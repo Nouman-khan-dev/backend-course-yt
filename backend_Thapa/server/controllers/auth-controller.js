@@ -56,17 +56,12 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   const { username, email, password } = req.body;
-  console.log("body: ", req.body);
   if (!email || !password) {
     return res
       .status(400)
       .json({ message: "Please provide all the fields!" });
   }
 
-  //
-  // ****
-  // checking if all the functionality is working
-  // ****
   //
   try {
     const user = await User.findOne({ email });
