@@ -19,7 +19,7 @@ const home = async (req, res) => {
 //               -- register  --
 // ------------------------------------------------
 
-const register = async (req, res) => {
+const register = async (req, res, next) => {
   try {
     const { username, email, phone, password } = req.body;
     const existingUser = await User.findOne({
@@ -47,6 +47,7 @@ const register = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json("internel server error: ", error);
+    next(error);
   }
 };
 

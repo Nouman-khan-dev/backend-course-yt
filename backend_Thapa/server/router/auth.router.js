@@ -19,4 +19,5 @@ router.get("/", home);
 router.route("/register").post(validate(signupSchema), register);
 //
 router.post("/login", login);
+
 export default router;
