@@ -1,13 +1,15 @@
 import express, { Router } from "express";
 import connectDb from "./utils/db.js";
-import router from "./router/auth.router.js";
-import errorMiddleware from "./middlewares/error-middleware.js";
+import authRoute from "./router/auth.router.js";
+import contactRoute from "./router/contact-router.js";
 const app = express();
 
 const port = 3000;
 
 app.use(express.json());
 // app.use(errorMiddleware);
+app.use("/api/auth", authRoute);
+app.use("/api/contact", contactRoute);
 
 connectDb()
   .then(() => {
@@ -18,5 +20,3 @@ connectDb()
   .catch((error) =>
     console.error("Failed to connect", error.message)
   );
-
-app.use("/", router);

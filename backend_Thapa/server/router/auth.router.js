@@ -7,17 +7,18 @@ import {
   register,
 } from "../controllers/auth-controller.js";
 import validate from "../middlewares/validate-middleware.js";
-import signupSchema from "../validators/auth-validator.js";
+import {
+  signupSchema,
+  loginSchema,
+} from "../validators/auth-validator.js";
 
-const app = express();
+const authRoute = express.Router();
 
-const router = express.Router();
-
-router.get("/", home);
+authRoute.get("/", home);
 
 // router.post("/register", register);
-router.route("/register").post(validate(signupSchema), register);
+authRoute.route("/register").post(validate(signupSchema), register);
 //
-router.post("/login", login);
+authRoute.post("/login", validate(loginSchema), login);
 
-export default router;
+export default authRoute;
