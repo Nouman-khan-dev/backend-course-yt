@@ -6,6 +6,12 @@ const app = express();
 
 const port = 3000;
 
+// **********************
+// there is only one problem in error handling that server gets -
+// crashed when you because of message Schema, when it does not get
+// any required property.
+// **********************
+
 app.use(express.json());
 // app.use(errorMiddleware);
 app.use("/api/auth", authRoute);
