@@ -66,3 +66,9 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+form input {
+  width: 100%;
+  font-size: 20px;
+  padding: 10px;
+}
