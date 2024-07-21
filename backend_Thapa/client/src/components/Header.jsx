@@ -18,6 +18,10 @@ export default function Header() {
       name: "Contact Us",
       link: "contactus",
     },
+    {
+      name: "Logout",
+      link: "logout",
+    },
   ];
   return (
     <div className="py-3 px-4 text-2xl">

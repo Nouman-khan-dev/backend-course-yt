@@ -6,6 +6,9 @@ const tokenContext = createContext({
     localStorage.setItem("token", token);
     console.log("soteTokenInLS is been triggered");
   },
+  removeTokenFromLS: () => {
+    localStorage.removeItem("token");
+  },
 });
 export const useAuthToken = () => {
   return useContext(tokenContext);

@@ -33,6 +33,7 @@ function Register() {
 
       if (response.ok) {
         storeTokenInLS(jsonResponse.token);
+        token = jsonResponse.token;
         console.log("register form jsonResponse : ", jsonResponse);
         Navigate("/");
       } else if (!response.ok) {
