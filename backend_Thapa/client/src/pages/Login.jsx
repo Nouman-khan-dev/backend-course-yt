@@ -1,9 +1,13 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuthToken } from "../contexts/context";
 
 function Register() {
+  const { storeTokenInLS, token } = useAuthToken();
+
+  const Navigate = useNavigate();
   const [userData, setUserData] = useState({
     email: "",
-
     password: "",
   });
 
@@ -14,11 +18,39 @@ function Register() {
     setUserData({ ...userData, [name]: value });
   };
 
+  const URL = "http://localhost:3000/api/auth/login";
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userData),
+      });
+      const jsonResponse = await response.json();
+
+      storeTokenInLS(jsonResponse.token);
+
+      console.log("submitt successfully : ", jsonResponse);
+
+      if (response.ok) {
+        Navigate("/");
+      } else if (!response.ok) {
+        alert(jsonResponse.message);
+      }
+    } catch (error) {
+      console.log("the Error: ", error);
+
+      throw error;
+    }
+  };
+
   return (
     <div>
       <h1>Login</h1>
       {/* form  */}
       <form
+        onSubmit={handleSubmit}
         className="form gap-5"
         style={{
           display: "flex",
@@ -31,7 +63,7 @@ function Register() {
             value={userData.email}
             onChange={handleInput}
             autoComplete="off"
-            type="email"
+            type="text"
             name="email"
             placeholder="email"
             id="email"

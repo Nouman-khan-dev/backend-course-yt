@@ -11,8 +11,14 @@ const validate = (schema) => async (req, res, next) => {
     };
     // console.log("The Error: ", next(error));
 
-    res.status(400).json({ msg: err.issues[0].message });
-    next(); // call this instead of response if using express error handler
+    res
+      .status(400)
+      .json({
+        status: 422,
+        message: "Fill the input properly ",
+        extraDetails: err.issues[0].message,
+      });
+    // next(); // call this instead of response if using express error handler
   }
 };
 

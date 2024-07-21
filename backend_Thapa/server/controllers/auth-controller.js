@@ -38,16 +38,17 @@ const register = async (req, res, next) => {
       password,
       phone,
     });
-
-    res.status(201).json({
-      msg: "registeration successfull!",
+    return res.status(201).json({
+      message: "registeration successfull!",
       newUser,
       token: await newUser.generateToken(),
       userId: newUser._id.toString(),
     });
   } catch (error) {
-    res.status(500).json("internel server error: ", error);
-    next(error);
+    return res
+      .status(500)
+      .json({ message: "internel server error: ", error: error });
+    /*next(error);*/
   }
 };
 
@@ -76,7 +77,7 @@ const login = async (req, res) => {
       // const token = await user.generateToken();
       // console.log(awaituser.generateToken());
       return res.status(200).json({
-        msg: "login successfull!",
+        message: "login successfull!",
         user: user,
         token: await user.generateToken(),
       });
