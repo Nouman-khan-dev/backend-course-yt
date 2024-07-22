@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuthToken } from "../contexts/context";
 
 function Register() {
-  const { token, storeTokenInLS } = useAuthToken();
+  const { token, storeTokenInLS, setIsLogedIn } = useAuthToken();
   const Navigate = useNavigate();
   const [userData, setUserData] = useState({
     username: "",
@@ -33,19 +33,15 @@ function Register() {
 
       if (response.ok) {
         storeTokenInLS(jsonResponse.token);
-        token = jsonResponse.token;
+
+        setIsLogedIn(true);
         console.log("register form jsonResponse : ", jsonResponse);
         Navigate("/");
       } else if (!response.ok) {
         alert(jsonResponse.message);
       }
     } catch (error) {
-      console.log(
-        "the Error: ",
-        error,
-        "respnose Error : ",
-        response.error
-      );
+      console.log("the Error: ", error);
     }
   };
 

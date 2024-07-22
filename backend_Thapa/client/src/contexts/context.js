@@ -2,9 +2,9 @@ import { createContext, useContext, useState } from "react";
 
 const tokenContext = createContext({
   token: "",
+  isLogedIn: "false",
   storeTokenInLS: (token) => {
     localStorage.setItem("token", token);
-    console.log("soteTokenInLS is been triggered");
   },
   removeTokenFromLS: () => {
     localStorage.removeItem("token");

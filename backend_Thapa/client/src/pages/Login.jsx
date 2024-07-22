@@ -3,7 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { useAuthToken } from "../contexts/context";
 
 function Register() {
-  const { storeTokenInLS, token } = useAuthToken();
+  const {
+    storeTokenInLS,
+    token,
+    isLogedIn,
+    setIsLogedIn,
+    removeTokenFromLS,
+  } = useAuthToken();
 
   const Navigate = useNavigate();
   const [userData, setUserData] = useState({
@@ -34,6 +40,8 @@ function Register() {
       console.log("submitt successfully : ", jsonResponse);
 
       if (response.ok) {
+        storeTokenInLS(response.token);
+        setIsLogedIn(true);
         Navigate("/");
       } else if (!response.ok) {
         alert(jsonResponse.message);
