@@ -1,6 +1,8 @@
 import { User } from "../models/user.model.js";
+import jwt from "jsonwebtoken";
 
 import bcrypt from "bcrypt";
+import { response } from "express";
 
 // ------------------------------------------------
 //               -- Home  --
@@ -91,4 +93,22 @@ const login = async (req, res) => {
   }
 };
 
-export { home, register, login };
+// ------------------------------------------------
+//               -- get user  --
+// ------------------------------------------------
+
+const getUser = async (req, res) => {
+  const user = req.user;
+  try {
+    const userData = await User.findOne({ email: user.email });
+    if (userData) {
+      return res.status(200).json({ message: userData });
+    } else {
+      res.status(400).json({ message: "user does not recognize" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "internal server Error" });
+  }
+};
+
+export { home, register, login, getUser };
