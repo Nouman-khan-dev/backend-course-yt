@@ -102,7 +102,7 @@ const getUser = async (req, res) => {
   try {
     const userData = await User.findOne({ email: user.email });
     if (userData) {
-      return res.status(200).json({ message: userData });
+      return res.status(200).json({ userData });
     } else {
       res.status(400).json({ message: "user does not recognize" });
     }

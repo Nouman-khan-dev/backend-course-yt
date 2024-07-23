@@ -1,11 +1,25 @@
 import React, { useState } from "react";
+import { useAuthToken } from "../contexts/context";
 
 export default function ContactUs() {
+  const [isUserData, setIsUserData] = useState(true);
   const [contactData, setContactData] = useState({
     name: "",
     email: "",
     message: "",
   });
+
+  const { user } = useAuthToken();
+
+  if (isUserData && user) {
+    setContactData({
+      name: user.username,
+      email: user.email,
+      message: "",
+    });
+    setIsUserData(false);
+  }
+  console.log("user in contact", user);
 
   const handleInput = (e) => {
     const name = e.target.name;

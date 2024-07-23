@@ -3,15 +3,48 @@ import React, { useContext, useEffect, useState } from "react";
 import Register from "./pages/Register";
 import Header from "./components/Header";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./components/Home";
+import Home from "./pages/Home";
 import Login from "./pages/Login";
 import ContactUs from "./pages/ContactUs";
 import Error from "./pages/404Error";
 import { TokenProvider, useAuthToken } from "./contexts/context";
 
 export default function App() {
-  const { token, storeTokenInLS, removeTokenFromLS } = useAuthToken();
-  const [isLogedIn, setIsLogedIn] = useState(false);
+  const [user, setUser] = useState(null);
+  const { storeTokenInLS, removeTokenFromLS } = useAuthToken();
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [isLogedIn, setIsLogedIn] = useState(token);
+
+  const URL = "http://localhost:3000/api/auth/user";
+
+  const getUserData = async () => {
+    try {
+      if (!user) {
+        const response = await fetch(URL, {
+          method: "GET",
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          return setUser(data.userData);
+        } else {
+          console.log(response.json().message);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    if (token) {
+      getUserData();
+    } else {
+      console.log("no token avalible");
+    }
+    setToken(localStorage.getItem("token"));
+  }, [isLogedIn]);
+
   return (
     <>
       <div>
@@ -22,6 +55,7 @@ export default function App() {
             removeTokenFromLS,
             isLogedIn,
             setIsLogedIn,
+            user,
           }}>
           <BrowserRouter>
             <Header />

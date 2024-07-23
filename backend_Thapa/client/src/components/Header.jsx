@@ -14,7 +14,6 @@ export default function Header() {
     setIslogedIn(false);
   };
 
-  console.log(isLogedIn);
   return (
     <div className="py-3 px-4 text-2xl">
       <div className="w-ful flex gap-5 list-none text-white">

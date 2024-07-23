@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuthToken } from "../contexts/context";
 
 function Register() {
-  const {
+  let {
     storeTokenInLS,
     token,
     isLogedIn,
@@ -35,12 +35,9 @@ function Register() {
       });
       const jsonResponse = await response.json();
 
-      storeTokenInLS(jsonResponse.token);
-
-      console.log("submitt successfully : ", jsonResponse);
-
       if (response.ok) {
-        storeTokenInLS(response.token);
+        storeTokenInLS(jsonResponse.token);
+        token = jsonResponse.token;
         setIsLogedIn(true);
         Navigate("/");
       } else if (!response.ok) {
