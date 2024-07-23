@@ -4,33 +4,54 @@ import { useAuthToken } from "../contexts/context";
 export default function ContactUs() {
   const [isUserData, setIsUserData] = useState(true);
   const [contactData, setContactData] = useState({
-    name: "",
+    username: "",
     email: "",
     message: "",
   });
+  const isEmpty = Object.values(contactData).every(
+    (value) => value !== ""
+  );
 
   const { user } = useAuthToken();
-
   if (isUserData && user) {
     setContactData({
-      name: user.username,
+      username: user.username,
       email: user.email,
       message: "",
     });
     setIsUserData(false);
   }
-  console.log("user in contact", user);
-
+  //  handle input
   const handleInput = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     setContactData((prev) => ({ ...prev, [name]: value }));
-    console.log(contactData);
   };
-  const handleSubmit = (e) => {
+  //  handle submit
+  const handleSubmit = async (e) => {
+    const URL = "http://localhost:3000/api/contact/form";
     e.preventDefault();
-
-    alert("Message Sent");
+    if (!isEmpty) {
+      return alert("Fill all the fields Please");
+    }
+    try {
+      const response = await fetch(URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(contactData),
+      });
+      const jsonResponse = await response.json();
+      if (response.ok) {
+        alert(jsonResponse.message);
+        setContactData({ ...contactData, message: "" });
+      } else {
+        console.log("contact error", response);
+      }
+    } catch (error) {
+      console.log("Error while sending message data", error);
+    }
   };
   return (
     <div className="p-4">
@@ -39,7 +60,7 @@ export default function ContactUs() {
         <div className="">
           <label htmlFor="name">name</label>
           <input
-            value={contactData.name}
+            value={contactData.username}
             onChange={handleInput}
             autoComplete="off"
             type="name"
