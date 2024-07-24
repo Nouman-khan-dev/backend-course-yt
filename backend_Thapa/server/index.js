@@ -3,6 +3,7 @@ import connectDb from "./utils/db.js";
 import authRoute from "./router/auth.router.js";
 import contactRoute from "./router/contact-router.js";
 import cors from "cors";
+import serviceRoute from "./router/service-router.js";
 const app = express();
 
 const port = 3000;
@@ -26,6 +27,7 @@ app.use(cors());
 // app.use(errorMiddleware);
 app.use("/api/auth", authRoute);
 app.use("/api/contact", contactRoute);
+app.use("/api", serviceRoute);
 
 connectDb()
   .then(() => {

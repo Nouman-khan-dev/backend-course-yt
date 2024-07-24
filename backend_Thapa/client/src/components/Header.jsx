@@ -20,6 +20,9 @@ export default function Header() {
         <Link key={1} to={"/"}>
           Home
         </Link>
+        <Link key={6} to={"/services"}>
+          Services
+        </Link>
         {!isLogedIn ? (
           <>
             <Link key={2} to={"/register"}>

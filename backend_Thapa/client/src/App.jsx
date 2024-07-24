@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import ContactUs from "./pages/ContactUs";
 import Error from "./pages/404Error";
 import { TokenProvider, useAuthToken } from "./contexts/context";
+import Services from "./pages/Services";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -64,6 +65,7 @@ export default function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/contactus" element={<ContactUs />} />
+              <Route path="/services" element={<Services />} />
               <Route path="*" element={<Error />} />
             </Routes>
           </BrowserRouter>
