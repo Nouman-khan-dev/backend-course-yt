@@ -9,12 +9,13 @@ import ContactUs from "./pages/ContactUs";
 import Error from "./pages/404Error";
 import { TokenProvider, useAuthToken } from "./contexts/context";
 import Services from "./pages/Services";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function App() {
   const [user, setUser] = useState(null);
   const { storeTokenInLS, removeTokenFromLS } = useAuthToken();
   const [token, setToken] = useState(localStorage.getItem("token"));
-  const [isLogedIn, setIsLogedIn] = useState(token);
+  const [isLogedIn, setIsLogedIn] = useState(!!token);
 
   const URL = "http://localhost:3000/api/auth/user";
 
@@ -60,6 +61,7 @@ export default function App() {
           }}>
           <BrowserRouter>
             <Header />
+            <ToastContainer />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />

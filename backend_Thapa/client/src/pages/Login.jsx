@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthToken } from "../contexts/context";
+import { Bounce, toast } from "react-toastify";
 
 function Register() {
   let {
@@ -16,6 +17,33 @@ function Register() {
     email: "",
     password: "",
   });
+
+  // ============================================
+  const showErrorToast = (message) =>
+    toast.error(message, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Bounce,
+    });
+  const notify = (text) =>
+    toast.success(text, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Bounce,
+    });
+  // ============================================
 
   const handleInput = (e) => {
     const name = e.target.name;
@@ -36,12 +64,21 @@ function Register() {
       const jsonResponse = await response.json();
 
       if (response.ok) {
+        notify("Login successfull");
         storeTokenInLS(jsonResponse.token);
         token = jsonResponse.token;
-        setIsLogedIn(true);
-        Navigate("/");
+        setIsLogedIn(!!token);
+        // window.location.redirect("/");
+        document.location.href = "/";
       } else if (!response.ok) {
-        alert(jsonResponse.message);
+        const errordetails = await jsonResponse.extraDetails;
+        const errorMsg = await jsonResponse.message;
+        const finalError = errordetails
+          ? errordetails
+          : errorMsg
+          ? errorMsg
+          : "Fill all the input properly";
+        showErrorToast(finalError);
       }
     } catch (error) {
       console.log("the Error: ", error);

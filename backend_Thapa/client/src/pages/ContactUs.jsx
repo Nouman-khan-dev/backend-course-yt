@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAuthToken } from "../contexts/context";
-
+import { Bounce, toast } from "react-toastify";
 export default function ContactUs() {
   const [isUserData, setIsUserData] = useState(true);
   const [contactData, setContactData] = useState({
@@ -8,6 +8,33 @@ export default function ContactUs() {
     email: "",
     message: "",
   });
+
+  //  Toastify
+  const showErrorToast = (message) =>
+    toast.error(message, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Bounce,
+    });
+  const notify = (message) =>
+    toast.success(message, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Bounce,
+    });
+
   const isEmpty = Object.values(contactData).every(
     (value) => value !== ""
   );
@@ -32,7 +59,7 @@ export default function ContactUs() {
     const URL = "http://localhost:3000/api/contact/form";
     e.preventDefault();
     if (!isEmpty) {
-      return alert("Fill all the fields Please");
+      return showErrorToast("fill the input properly");
     }
     try {
       const response = await fetch(URL, {
@@ -44,10 +71,10 @@ export default function ContactUs() {
       });
       const jsonResponse = await response.json();
       if (response.ok) {
-        alert(jsonResponse.message);
+        notify(jsonResponse.message);
         setContactData({ ...contactData, message: "" });
       } else {
-        console.log("contact error", response);
+        showErrorToast(jsonResponse.extraDetails);
       }
     } catch (error) {
       console.log("Error while sending message data", error);

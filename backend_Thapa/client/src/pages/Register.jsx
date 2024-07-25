@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthToken } from "../contexts/context";
+import { Bounce, toast } from "react-toastify";
 
 function Register() {
   const { token, storeTokenInLS, setIsLogedIn } = useAuthToken();
@@ -11,7 +12,26 @@ function Register() {
     phone: "",
     password: "",
   });
+  // ============================================
+  // Tastify
+  // Set up the toastify configuration
 
+  // const notify = () => toast("Wow so easy!");
+
+  const showErrorToast = (message) =>
+    toast.error(message, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Bounce,
+    });
+
+  // =================================================
   const handleInput = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -38,7 +58,15 @@ function Register() {
         console.log("register form jsonResponse : ", jsonResponse);
         Navigate("/");
       } else if (!response.ok) {
-        alert(jsonResponse.message);
+        const errordetails = await jsonResponse.extraDetails;
+        const errorMsg = await jsonResponse.message;
+        const finalError = errordetails
+          ? errordetails
+          : errorMsg
+          ? errorMsg
+          : "Fill all the input properly";
+        showErrorToast(finalError),
+          console.log("error the jsonResponse : ", jsonResponse);
       }
     } catch (error) {
       console.log("the Error: ", error);
@@ -49,6 +77,7 @@ function Register() {
     <div>
       <h1>Register</h1>
       {/* form  */}
+
       <form
         onSubmit={handelSubmit}
         className="form"

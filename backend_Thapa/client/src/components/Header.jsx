@@ -1,17 +1,35 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { TokenProvider, useAuthToken } from "../contexts/context";
+import { Bounce, toast } from "react-toastify";
 //
 //
 //
 export default function Header() {
   const { isLogedIn, setIslogedIn, removeTokenFromLS } =
     useAuthToken();
+  const navigate = useNavigate();
+
+  const notify = (text) =>
+    toast.success(text, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Bounce,
+    });
 
   const handleLogOut = () => {
+    // e.preventDefault();
+    notify("Successfully logout");
     removeTokenFromLS();
     token = "";
     setIslogedIn(false);
+    navigate("/login");
   };
 
   return (
@@ -39,7 +57,7 @@ export default function Header() {
           Contact Us
         </Link>
         {isLogedIn ? (
-          <Link key={5} onClick={handleLogOut} to={"/"}>
+          <Link key={5} onClick={handleLogOut} to={"/login"}>
             Logout
           </Link>
         ) : (

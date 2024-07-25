@@ -2,10 +2,19 @@ import React, { useEffect, useState } from "react";
 import { useAuthToken } from "../contexts/context";
 
 export default function Home() {
-  const [render, rerennder] = useState(false);
   const { user, isLogedIn } = useAuthToken();
+  const [render, rerender] = useState(isLogedIn);
+  const token = localStorage.getItem("token");
   useEffect(() => {
-    rerennder((prev) => !prev);
+    rerender((prev) => !prev);
+    console.log(
+      "render: ",
+      render,
+      "token",
+      token,
+      "islogedIN:",
+      isLogedIn
+    );
   }, [isLogedIn]);
 
   return (
