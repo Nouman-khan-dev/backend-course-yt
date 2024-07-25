@@ -12,7 +12,8 @@ const messageValidator = z.object({
   email: z
     .string({ required_error: "email is required" })
     .trim()
-    .min(3, { message: "email must be at least of 5 character" })
+    .email({ message: "email is not valid" })
+    .min(3, { message: "email must be at least of 3 character" })
     .max(20, "email must be not more than 20 characters"),
   message: z
     .string({ required_error: "please write some message" })
