@@ -4,15 +4,10 @@ import authRoute from "./router/auth.router.js";
 import contactRoute from "./router/contact-router.js";
 import cors from "cors";
 import serviceRoute from "./router/service-router.js";
+import adminRoute from "./router/admin-router.js";
 const app = express();
 
 const port = 3000;
-
-// **********************
-// there is only one problem in error handling that server gets -
-// crashed when you because of message Schema, when it does not get
-// any required property.
-// **********************
 
 app.use(express.json());
 
@@ -28,6 +23,7 @@ app.use(cors());
 app.use("/api/auth", authRoute);
 app.use("/api/contact", contactRoute);
 app.use("/api", serviceRoute);
+app.use("/api/admin", adminRoute);
 
 connectDb()
   .then(() => {
