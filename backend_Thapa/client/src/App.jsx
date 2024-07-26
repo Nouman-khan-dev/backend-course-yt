@@ -49,7 +49,7 @@ export default function App() {
 
   return (
     <>
-      <div>
+      <div className="min-h-screen min-w-screen bg-gray-800">
         <TokenProvider
           value={{
             token,
@@ -61,6 +61,7 @@ export default function App() {
           }}>
           <BrowserRouter>
             <Header />
+
             <ToastContainer />
             <Routes>
               <Route path="/" element={<Home />} />
