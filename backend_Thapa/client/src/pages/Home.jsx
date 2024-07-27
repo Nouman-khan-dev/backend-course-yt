@@ -7,14 +7,14 @@ export default function Home() {
   const token = localStorage.getItem("token");
   useEffect(() => {
     rerender((prev) => !prev);
-    console.log(
-      "render: ",
-      render,
-      "token",
-      token,
-      "islogedIN:",
-      isLogedIn
-    );
+    // console.log(
+    //   "render: ",
+    //   render,
+    //   "token",
+    //   token,
+    //   "islogedIN:",
+    //   isLogedIn
+    // );
   }, [isLogedIn]);
 
   return (

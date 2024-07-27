@@ -55,6 +55,8 @@ function Register() {
   const URL = "http://localhost:3000/api/auth/login";
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!userData.email || !userData.password)
+      return showErrorToast("Please fill all inputs");
     try {
       const response = await fetch(URL, {
         method: "POST",
@@ -81,9 +83,8 @@ function Register() {
         showErrorToast(finalError);
       }
     } catch (error) {
-      console.log("the Error: ", error);
-
-      throw error;
+      // console.log("the Error: ", error);
+      showErrorToast("Something went wrong");
     }
   };
 
@@ -148,7 +149,7 @@ function Register() {
           </div>
 
           <form
-            action="#"
+            onSubmit={handleSubmit}
             className="mx-auto mb-0 mt-8 max-w-md space-y-4">
             <div>
               <label htmlFor="email" className="sr-only">
@@ -157,9 +158,14 @@ function Register() {
 
               <div className="relative ">
                 <input
-                  type="email"
                   className="w-full rounded-lg bg-gray-900 text-gray-100 border-gray-200 p-4 pe-12 text-sm shadow-sm"
                   placeholder="Enter email"
+                  value={userData.email}
+                  onChange={handleInput}
+                  autoComplete="off"
+                  type="text"
+                  name="email"
+                  id="email"
                 />
 
                 <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
@@ -187,9 +193,14 @@ function Register() {
 
               <div className="relative">
                 <input
-                  type="password"
                   className="w-full rounded-lg  bg-gray-900 text-gray-100 border-gray-200 p-4 pe-12 text-sm shadow-sm"
                   placeholder="Enter password"
+                  value={userData.password}
+                  onChange={handleInput}
+                  autoComplete="off"
+                  type="password"
+                  name="password"
+                  id="password"
                 />
 
                 <span className="absolute inset-y-0 end-0 grid place-content-center px-4">

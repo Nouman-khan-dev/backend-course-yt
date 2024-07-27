@@ -11,6 +11,11 @@ import { TokenProvider, useAuthToken } from "./contexts/context";
 import Services from "./pages/Services";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AdminLayout from "./Admin/Layouts/AdminLayout";
+import AdminUsers from "./Admin/pages/AdminUsers";
+import AdminContact from "./Admin/pages/AdminContact";
+//
+//
 export default function App() {
   const [user, setUser] = useState(null);
   const { storeTokenInLS, removeTokenFromLS } = useAuthToken();
@@ -41,8 +46,6 @@ export default function App() {
   useEffect(() => {
     if (token) {
       getUserData();
-    } else {
-      console.log("no token avalible");
     }
     setToken(localStorage.getItem("token"));
   }, [isLogedIn]);
@@ -64,12 +67,17 @@ export default function App() {
 
             <ToastContainer />
             <Routes>
+              {/* <Route path="/admin" element={<AdminHome />} /> */}
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/contactus" element={<ContactUs />} />
               <Route path="/services" element={<Services />} />
               <Route path="*" element={<Error />} />
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route path="users" element={<AdminUsers />} />
+                <Route path="contacts" element={<AdminContact />} />
+              </Route>
             </Routes>
           </BrowserRouter>
         </TokenProvider>
