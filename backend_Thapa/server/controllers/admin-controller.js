@@ -30,11 +30,19 @@ const getAllUsers = async (req, res) => {
 //     Delete a user
 // ****************************************************
 
-const deleteOneUser = async (req, res) => {
-  const { user } = req.body;
+const deleteUser = async (req, res) => {
+  const userId = req.params.id;
+  console.log(userId);
   try {
-    await User.findOneAndDelete({ email: user.email });
-    res.status(200).json({ message: "user deleted successfully" });
+    const deletedUser = await User.findByIdAndDelete(userId);
+    if (deletedUser) {
+      console.log(deletedUser);
+      res
+        .status(200)
+        .json({ message: "user deleted successfully", deletedUser });
+    } else {
+      res.status(404).json({ message: "user not found" });
+    }
   } catch (error) {
     res
       .status(500)
@@ -82,4 +90,4 @@ const deleteOneMessage = async (req, res) => {
   }
 };
 
-export { getAllUsers, getAllContacts };
+export { getAllUsers, getAllContacts, deleteUser };

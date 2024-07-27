@@ -50,8 +50,24 @@ export default function AdminUsers() {
   // --- Delete User function
   // -------------------------------------
 
-  const delelteUser = async (token) => {
-    const URL = "http://localhost:3000/api/admin/users";
+  const deleteUser = async (id) => {
+    const URL = `http://localhost:3000/api/admin/users/${id}`;
+
+    if (!id) return console.log("no Id found");
+
+    try {
+      const response = await fetch(URL, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        setUsers(users.filter((user) => user._id !== id));
+      } else {
+        console.log(await response.json());
+      }
+    } catch (error) {
+      console.log("Error While Deleting the User :", error);
+    }
   };
 
   return (
@@ -100,11 +116,11 @@ export default function AdminUsers() {
                   )}
                 </td>
                 <td className="whitespace-nowrap px-4 py-2">
-                  <a
-                    href="#"
+                  <button
+                    onClick={() => deleteUser(user._id)}
                     className="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">
                     Delete
-                  </a>
+                  </button>
                 </td>
               </tr>
             ))}
