@@ -55,7 +55,6 @@ function Register() {
         storeTokenInLS(jsonResponse.token);
 
         setIsLogedIn(true);
-        console.log("register form jsonResponse : ", jsonResponse);
         Navigate("/");
       } else if (!response.ok) {
         const errordetails = await jsonResponse.extraDetails;

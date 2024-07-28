@@ -1,18 +1,54 @@
 import React, { useEffect, useState } from "react";
 import { useAuthToken } from "../../contexts/context";
+import { Link } from "react-router-dom";
+import { Bounce, toast } from "react-toastify";
+// ***************************************************
+// ***************************************************
+// there's one issue admin can delte himself,
+// and the IsLogedIn state does'nt change
+// ***************************************************
+// ***************************************************
 
 export default function AdminUsers() {
   const [users, setUsers] = useState(null);
+  const { user } = useAuthToken();
+  const logedInUser = user?.email;
+  //  -----------------------------------------
+  // toastify
+  //  -----------------------------------------
+  const showErrorToast = (message) =>
+    toast.error(message, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Bounce,
+    });
+  const showSuccessToast = (message) =>
+    toast.success(message, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Bounce,
+    });
 
   // -------------------------------------
-  // --- Fetching data from data base
+  // --- Fetching data from database
   // -------------------------------------
   //
   const { token } = useAuthToken();
   const getAllData = async () => {
-    console.log("users:::", users);
     const URL = "http://localhost:3000/api/admin/users";
-    if (users) return console.log("users: ", users);
+    if (users) return;
     if (!token || token === "undefined")
       return console.log("no token");
 
@@ -23,7 +59,7 @@ export default function AdminUsers() {
       },
     });
     const data = await response.json();
-    console.log(response);
+
     if (response.ok) {
       // sorting data to frst value will be the admin
       const allAdmins = data.data.filter(
@@ -42,16 +78,16 @@ export default function AdminUsers() {
       console.error(error);
       console.log("error while fetching all users in admin pane");
     }
-    console.log("user sorted users", users);
   };
   // calling our GetAllData in a useEffect
   useEffect(() => getAllData, []);
   // -------------------------------------
-  // --- Delete User function
+  // --- Delete User, function
   // -------------------------------------
 
   const deleteUser = async (id) => {
-    const URL = `http://localhost:3000/api/admin/users/${id}`;
+    console.log("delete user triggerd");
+    const URL = `http://localhost:3000/api/admin/users/delete/${id}`;
 
     if (!id) return console.log("no Id found");
 
@@ -62,18 +98,28 @@ export default function AdminUsers() {
 
       if (response.ok) {
         setUsers(users.filter((user) => user._id !== id));
+        showSuccessToast("Deleted successfully");
       } else {
         console.log(await response.json());
+        showErrorToast("Could not deleted user");
       }
     } catch (error) {
       console.log("Error While Deleting the User :", error);
+      showErrorToast("Could not deleted user");
     }
+  };
+
+  const handleDelete = (e, user) => {
+    // user.email === logedInUser
+    //   ? showErrorToast("You can't delete yourself")
+    //   :
+    deleteUser(user._id);
   };
 
   return (
     <div className="text-white text-3xl h-full">
       <div className="overflow-x-auto h-full">
-        <table className="min-w-full  h-full divide-y-2 divide-gray-200 bg-white text-sm dark:divide-gray-700 dark:bg-gray-900">
+        <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm dark:divide-gray-700 dark:bg-gray-900">
           <thead className="ltr:text-left rtl:text-right text-[18px] ">
             <tr>
               <th className="whitespace-nowrap px-4 py-5 font-medium text-gray-900 dark:text-white">
@@ -92,11 +138,13 @@ export default function AdminUsers() {
             </tr>
           </thead>
 
-          <tbody className="divide-y divide-gray-200 overflow-x-auto dark:divide-gray-700">
+          <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
             {users?.map((user, index) => (
               <tr
                 key={index}
-                className={`${user.isAdmin ? "bg-gray-800 " : ""}`}>
+                className={`${user.isAdmin ? "bg-gray-800 " : ""} ${
+                  user.email === logedInUser ? "bg-teal-950" : ""
+                }`}>
                 <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 dark:text-white">
                   {user.username}
                 </td>
@@ -117,7 +165,15 @@ export default function AdminUsers() {
                 </td>
                 <td className="whitespace-nowrap px-4 py-2">
                   <button
-                    onClick={() => deleteUser(user._id)}
+                    id={index}
+                    className="inline-block rounded bg-sky-900 px-2 w-14 py-2 text-xs font-medium text-white hover:bg-indigo-700">
+                    <Link to={`${user._id}/edit`}>Edit</Link>
+                  </button>
+                </td>
+                <td className="whitespace-nowrap px-4 py-2">
+                  <button
+                    disabled={true}
+                    onClick={deleteUser(user._id)}
                     className="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">
                     Delete
                   </button>

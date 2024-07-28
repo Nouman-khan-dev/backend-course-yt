@@ -14,6 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import AdminLayout from "./Admin/Layouts/AdminLayout";
 import AdminUsers from "./Admin/pages/AdminUsers";
 import AdminContact from "./Admin/pages/AdminContact";
+import UpdateUser from "./Admin/pages/UpdateUser";
 //
 //
 export default function App() {
@@ -77,6 +78,10 @@ export default function App() {
               <Route path="/admin" element={<AdminLayout />}>
                 <Route path="users" element={<AdminUsers />} />
                 <Route path="contacts" element={<AdminContact />} />
+                <Route
+                  path="users/:id/edit"
+                  element={<UpdateUser />}
+                />
               </Route>
             </Routes>
           </BrowserRouter>
