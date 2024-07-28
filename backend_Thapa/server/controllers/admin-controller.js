@@ -10,17 +10,11 @@ import { User } from "../models/user.model.js";
 
 const getAllUsers = async (req, res) => {
   try {
-    const isAdmin = req.body.isAdmin;
-    // const allUser = await User.find().select("-password");
     const allUser = await User.find({}, { password: 0 });
     if (allUser || allUser.length > 0) {
-      //  if( isAdmin){
       res
         .status(200)
         .json({ message: "operation successfull", data: allUser });
-      //  } else res
-      //         .status(401)
-      //         .json({ message: "access denied! unauthorized request" });
     } else res.status(404).json({ message: "no user found" });
   } catch (error) {
     res.status(400).json({ message: "operation faild", error });

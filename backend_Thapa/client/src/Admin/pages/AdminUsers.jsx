@@ -72,11 +72,13 @@ export default function AdminUsers() {
       setUsers([...allAdmins, ...allUsers]);
     } else {
       console.log(data.message);
+      showErrorToast(data.message);
     }
     try {
     } catch (error) {
       console.error(error);
       console.log("error while fetching all users in admin pane");
+      showErrorToast("Something went wrong");
     }
   };
   // calling our GetAllData in a useEffect
@@ -109,12 +111,12 @@ export default function AdminUsers() {
     }
   };
 
-  const handleDelete = (e, user) => {
-    // user.email === logedInUser
-    //   ? showErrorToast("You can't delete yourself")
-    //   :
-    deleteUser(user._id);
-  };
+  // const handleDelete = (e, user) => {
+  //   // user.email === logedInUser
+  //   //   ? showErrorToast("You can't delete yourself")
+  //   //   :
+  //   deleteUser(user._id);
+  // };
 
   return (
     <div className="text-white text-3xl h-full">
@@ -134,7 +136,7 @@ export default function AdminUsers() {
               <th className="whitespace-nowrap px-4 py-5 font-medium text-gray-900 dark:text-white">
                 Role
               </th>
-              <th className="px-4 py-2"></th>
+              {/* <th className="px-4 py-2"></th> */}
             </tr>
           </thead>
 
@@ -143,7 +145,7 @@ export default function AdminUsers() {
               <tr
                 key={index}
                 className={`${user.isAdmin ? "bg-gray-800 " : ""} ${
-                  user.email === logedInUser ? "bg-teal-950" : ""
+                  user.email === logedInUser ? "bg-zinc-700" : ""
                 }`}>
                 <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 dark:text-white">
                   {user.username}
@@ -157,7 +159,8 @@ export default function AdminUsers() {
                 <td className="whitespace-nowrap px-4 py-2 text-gray-700 dark:text-gray-200">
                   {user.isAdmin === true ? (
                     <span className="font-bold text-white">
-                      Admin
+                      Admin{" "}
+                      {user.email === logedInUser ? "(YOU)" : ""}
                     </span>
                   ) : (
                     "User"
@@ -166,15 +169,21 @@ export default function AdminUsers() {
                 <td className="whitespace-nowrap px-4 py-2">
                   <button
                     id={index}
-                    className="inline-block rounded bg-sky-900 px-2 w-14 py-2 text-xs font-medium text-white hover:bg-indigo-700">
+                    className="inline-block rounded bg-sky-900 px-2 w-14 py-2 text-xs font-medium text-white hover:bg-sky-800">
                     <Link to={`${user._id}/edit`}>Edit</Link>
                   </button>
                 </td>
                 <td className="whitespace-nowrap px-4 py-2">
                   <button
-                    disabled={true}
-                    onClick={deleteUser(user._id)}
-                    className="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">
+                    disabled={
+                      user.email === logedInUser ? true : false
+                    }
+                    onClick={() => deleteUser(user._id)}
+                    className={`inline-block rounded ${
+                      user.email === logedInUser
+                        ? "cursor-not-allowed text-gray-400 bg-gray-700 hover:bg-gray-700"
+                        : "text-red-100"
+                    } bg-[#f0f0f053] px-4 py-2 text-xs font-medium text-gray-100 hover:bg-gray-600`}>
                     Delete
                   </button>
                 </td>

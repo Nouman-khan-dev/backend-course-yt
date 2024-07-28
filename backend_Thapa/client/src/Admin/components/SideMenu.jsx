@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 export default function SideMenu() {
   return (
@@ -11,12 +11,20 @@ export default function SideMenu() {
           </div>
 
           <ul className="mt-6 ">
-            <li className="my-4">
-              <Link
+            <li className={`my-4 `}>
+              <NavLink
                 to="users"
-                className="block hover:bg-gray-500 rounded-lg text-left bg-gray-600 px-4 py-2 text-lg font-medium text-gray-100">
+                style={(isActive) => ({
+                  backgroundColor: isActive ? "gray" : "transparent",
+                  color: isActive ? "white" : "gray",
+                })}
+                className="block hover:bg-gray-500 rounded-lg text-left bg-gray-600 px-4 py-2 text-lg font-medium text-gray-100"
+                // className={({ isActive }) =>
+                //   isActive ? "bg-red-500" : "text-gray-100"
+                // }
+              >
                 Users
-              </Link>
+              </NavLink>
             </li>
 
             <li className="my-4">

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
+import { useAuthToken } from "../../contexts/context";
 
 export default function UpdateUser() {
   const [userData, setUserData] = useState({
@@ -11,6 +12,8 @@ export default function UpdateUser() {
   });
   const { id } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuthToken();
+  const logedInUser = user?.email;
 
   // -------------------------------------
   // -- toastify
@@ -181,6 +184,9 @@ export default function UpdateUser() {
                     Admin
                   </label>
                   <select
+                    disabled={
+                      logedInUser === userData.email ? true : false
+                    }
                     value={userData.isAdmin}
                     onChange={(e) =>
                       setUserData({
@@ -190,10 +196,14 @@ export default function UpdateUser() {
                       })
                     }
                     id="admin"
-                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg
+                    className={`${
+                      logedInUser === userData.email
+                        ? "cursor-not-allowed"
+                        : ""
+                    } block w-full px-4 py-2 mt-2 text-gray-700 bg
                   white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark
                   :border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring
-                  -opacity-40 dark:focus:border-blue-300 focus:outline-none ">
+                  -opacity-40 dark:focus:border-blue-300 focus:outline-none `}>
                     <option className="py-3" value="false">
                       No
                     </option>

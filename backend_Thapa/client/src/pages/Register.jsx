@@ -73,13 +73,13 @@ function Register() {
   };
 
   return (
-    <div>
+    <div className="flex justify-center text-gray-500">
       <h1>Register</h1>
       {/* form  */}
 
       <form
         onSubmit={handelSubmit}
-        className="form"
+        className="form w-[60%]"
         style={{
           display: "flex",
           flexDirection: "column",
