@@ -7,18 +7,10 @@ export default function Home() {
   const token = localStorage.getItem("token");
   useEffect(() => {
     rerender((prev) => !prev);
-    // console.log(
-    //   "render: ",
-    //   render,
-    //   "token",
-    //   token,
-    //   "islogedIN:",
-    //   isLogedIn
-    // );
   }, [isLogedIn]);
 
   return (
-    <div className="">
+    <div className="text-white">
       <div className="text-3xl">Home Page</div>
       <div className="border-t-2 border-white p-3">
         <h3 className="text-2xl font-semibold text-start">

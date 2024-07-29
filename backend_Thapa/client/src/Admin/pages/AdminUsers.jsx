@@ -88,7 +88,6 @@ export default function AdminUsers() {
   // -------------------------------------
 
   const deleteUser = async (id) => {
-    console.log("delete user triggerd");
     const URL = `http://localhost:3000/api/admin/users/delete/${id}`;
 
     if (!id) return console.log("no Id found");

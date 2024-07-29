@@ -121,11 +121,10 @@ const getAllContacts = async (req, res) => {
 //     Delete a Contact
 // ****************************************************
 const deleteOneMessage = async (req, res) => {
-  const { message } = req.body;
+  const id = req.params.id;
+
   try {
-    const deletedMessage = Contact.fintOneAndDelete({
-      email: message.email,
-    });
+    const deletedMessage = await Contact.findByIdAndDelete(id);
     if (deletedMessage) {
       res
         .status(200)
@@ -146,4 +145,5 @@ export {
   deleteUser,
   getUserToUpdate,
   updateUser,
+  deleteOneMessage,
 };

@@ -14,10 +14,10 @@ export default function SideMenu() {
             <li className={`my-4 `}>
               <NavLink
                 to="users"
-                style={(isActive) => ({
-                  backgroundColor: isActive ? "gray" : "transparent",
-                  color: isActive ? "white" : "gray",
-                })}
+                // style={(isActive) => ({
+                //   backgroundColor: isActive ? "gray" : "transparent",
+                //   color: isActive ? "white" : "gray",
+                // })}
                 className="block hover:bg-gray-500 rounded-lg text-left bg-gray-600 px-4 py-2 text-lg font-medium text-gray-100"
                 // className={({ isActive }) =>
                 //   isActive ? "bg-red-500" : "text-gray-100"
