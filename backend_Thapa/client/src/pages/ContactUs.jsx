@@ -59,7 +59,7 @@ export default function ContactUs() {
     const URL = "http://localhost:3000/api/contact/form";
     e.preventDefault();
     if (!isEmpty) {
-      return showErrorToast("fill the input properly");
+      return showErrorToast("fill all the inputs properly");
     }
     try {
       const response = await fetch(URL, {
@@ -81,51 +81,77 @@ export default function ContactUs() {
     }
   };
   return (
-    <div className="p-4">
-      <h3 className="text-3xl font-bold">Contact Us</h3>
-      <form onSubmit={handleSubmit}>
-        <div className="">
-          <label htmlFor="name">name</label>
-          <input
-            value={contactData.username}
-            onChange={handleInput}
-            autoComplete="off"
-            type="name"
-            name="name"
-            placeholder="name"
-            id="name"
-          />
-        </div>
-        <div className="">
-          <label htmlFor="email">email</label>
-          <input
-            value={contactData.email}
-            onChange={handleInput}
-            autoComplete="off"
-            type="email"
-            name="email"
-            placeholder="email"
-            id="email"
-          />
-        </div>
-        <div className="">
-          <label htmlFor="message">message</label>
-          <textarea
-            className="w-full p-2"
-            value={contactData.message}
-            onChange={handleInput}
-            autoComplete="off"
-            type="message"
-            name="message"
-            placeholder="message"
-            id="message"
-          />
-        </div>
+    <section class="bg-white h-[calc(100vh-65px)] dark:bg-gray-800 border border-gray-900">
+      <div class="py-1 lg:py-1 px-4 mx-auto max-w-screen-md">
+        <h2 class="my-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">
+          Contact Us
+        </h2>
+        <p class="mb-4 lg:mb-8 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl">
+          Got a technical issue? Want to send feedback? Need details
+          about our Business plan? Let us know.
+        </p>
 
-        <button type="submit" className="w-30">
-          Submit
-        </button>
-      </form>
-    </div>
+        <form onSubmit={handleSubmit} class="space-y-8">
+          <div>
+            <label
+              htmlFor="subject"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+              Your name
+            </label>
+            <input
+              value={contactData.username}
+              onChange={handleInput}
+              autoComplete="off"
+              name="username"
+              type="text"
+              id="subject"
+              class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
+              placeholder="john doe"
+              required
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="email"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+              Your email
+            </label>
+            <input
+              value={contactData.email}
+              onChange={handleInput}
+              autoComplete="off"
+              name="email"
+              type="email"
+              id="email"
+              class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
+              placeholder="name@flowbite.com"
+              required
+            />
+          </div>
+
+          <div class="sm:col-span-2">
+            <label
+              htmlFor="message"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
+              Your message
+            </label>
+            <textarea
+              value={contactData.message}
+              onChange={handleInput}
+              autoComplete="off"
+              name="message"
+              id="message"
+              rows="6"
+              class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+              placeholder="Leave a comment..."></textarea>
+          </div>
+          <button
+            type="submit"
+            class="py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-primary-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Send message
+          </button>
+        </form>
+      </div>
+    </section>
   );
 }

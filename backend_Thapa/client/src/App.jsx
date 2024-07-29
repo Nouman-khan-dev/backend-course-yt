@@ -1,4 +1,3 @@
-import "./App.css";
 import React, { useContext, useEffect, useState } from "react";
 import Register from "./pages/Register";
 import Header from "./components/Header";
@@ -53,39 +52,45 @@ export default function App() {
 
   return (
     <>
-      <div className="min-h-screen min-w-screen bg-gray-800">
-        <TokenProvider
-          value={{
-            token,
-            storeTokenInLS,
-            removeTokenFromLS,
-            isLogedIn,
-            setIsLogedIn,
-            user,
-          }}>
-          <BrowserRouter>
-            <Header />
+      <div className="w-screen bg-gray-800">
+        <div className="min-h-screen min-w-screen mx-auto max-w-[1350px] bg-gray-800">
+          <TokenProvider
+            value={{
+              token,
+              storeTokenInLS,
+              removeTokenFromLS,
+              isLogedIn,
+              setIsLogedIn,
+              user,
+            }}>
+            <BrowserRouter>
+              <Header />
 
-            <ToastContainer />
-            <Routes>
-              {/* <Route path="/admin" element={<AdminHome />} /> */}
-              <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/contactus" element={<ContactUs />} />
-              <Route path="/services" element={<Services />} />
-              <Route path="*" element={<Error />} />
-              <Route path="/admin" element={<AdminLayout />}>
-                <Route path="users" element={<AdminUsers />} />
-                <Route path="contacts" element={<AdminContact />} />
+              <ToastContainer />
+              <Routes>
+                {/* <Route path="/admin" element={<AdminHome />} /> */}
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/contactus" element={<ContactUs />} />
+                <Route path="/services" element={<Services />} />
+                <Route path="*" element={<Error />} />
                 <Route
-                  path="users/:id/edit"
-                  element={<UpdateUser />}
-                />
-              </Route>
-            </Routes>
-          </BrowserRouter>
-        </TokenProvider>
+                  path="/admin"
+                  element={
+                    user?.isAdmin ? <AdminLayout /> : <Error />
+                  }>
+                  <Route path="users" element={<AdminUsers />} />
+                  <Route path="contacts" element={<AdminContact />} />
+                  <Route
+                    path="users/:id/edit"
+                    element={<UpdateUser />}
+                  />
+                </Route>
+              </Routes>
+            </BrowserRouter>
+          </TokenProvider>
+        </div>
       </div>
     </>
   );

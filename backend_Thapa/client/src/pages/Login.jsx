@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthToken } from "../contexts/context";
 import { Bounce, toast } from "react-toastify";
 
@@ -83,57 +83,16 @@ function Register() {
         showErrorToast(finalError);
       }
     } catch (error) {
-      // console.log("the Error: ", error);
       showErrorToast("Something went wrong");
     }
   };
 
   return (
     <div>
-      <h1 className="my-6 text-6xl font-bold text-gray-50">Login</h1>
-      {/* form  */}
-      {/* <form
-        onSubmit={handleSubmit}
-        className="form gap-5"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          fontSize: "",
-        }}>
-        <div className="">
-          <label htmlFor="email">email</label>
-          <input
-            value={userData.email}
-            onChange={handleInput}
-            autoComplete="off"
-            type="text"
-            name="email"
-            placeholder="email"
-            id="email"
-          />
-        </div>
-        <div className="">
-          <label htmlFor="password">Password</label>
-          <input
-            value={userData.password}
-            onChange={handleInput}
-            autoComplete="off"
-            type="password"
-            name="password"
-            placeholder="password"
-            id="password"
-          />
-        </div>
-        <button type="submit" className="w-30">
-          Submit
-        </button>
-      </form> */}
-      {/*
-  Heads up! 👋
+      <h1 className="my-6 text-6xl font-bold text-center text-gray-50">
+        Login
+      </h1>
 
-  Plugins:
-    - @tailwindcss/forms
-*/}
       <div className="flex justify-center">
         <div className="mx-auto max-w-screen-xl px-2 py-16 sm:px-2 lg:px-8 border-2 border-gray-200 rounded-2xl">
           <div className="mx-auto max-w-lg text-center ">
@@ -230,9 +189,9 @@ function Register() {
             <div className="flex items-center justify-between">
               <p className="text-sm text-gray-200">
                 No account?
-                <a className="underline  ml-2" href="#">
+                <Link className="underline  ml-2" to="/register">
                   Sign up
-                </a>
+                </Link>
               </p>
 
               <button

@@ -94,7 +94,7 @@ export default function AdminContact() {
 
   return (
     <div className="overflow-y-auto h-[calc(100vh-66px)]  w-full">
-      <div className="flex h-full w-full flex-wrap p-4 justify-center gap-x-7 gap-y-4 ">
+      <div className="flex h-full w-full flex-wrap p-4 items-start justify-center gap-x-7 gap-y-4 ">
         {contacts ? (
           contacts.map((contact) => (
             <article className="rounded-xl w-[400px] border border-gray-600 bg-gray-700 p-4">
