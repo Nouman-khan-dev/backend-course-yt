@@ -4,6 +4,7 @@ const tokenContext = createContext({
   token: localStorage.getItem("token"),
   isLogedIn: false,
   user: {},
+
   storeTokenInLS: (token) => {
     localStorage.setItem("token", token);
   },

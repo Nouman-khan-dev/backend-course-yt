@@ -21,6 +21,7 @@ export default function App() {
   const { storeTokenInLS, removeTokenFromLS } = useAuthToken();
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [isLogedIn, setIsLogedIn] = useState(!!token);
+  const [isLoading, setIsLoading] = useState(true);
 
   const URL = "http://localhost:3000/api/auth/user";
 

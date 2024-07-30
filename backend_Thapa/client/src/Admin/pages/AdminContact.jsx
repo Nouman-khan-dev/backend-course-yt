@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Bounce, toast } from "react-toastify";
+import { useAuthToken } from "../../contexts/context";
+import Loading from "../../pages/Loading";
 
 export default function AdminContact() {
   const [contacts, setContacts] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   // =========================================
   // -- Toastify
@@ -75,6 +78,7 @@ export default function AdminContact() {
     if (!id) return console.log("no Id found");
 
     try {
+      setIsLoading(true);
       const response = await fetch(URL, {
         method: "DELETE",
       });
@@ -90,66 +94,73 @@ export default function AdminContact() {
       console.log("Error While Deleting the contact :", error);
       showErrorToast("Could not deleted contact");
     }
+    setIsLoading(false);
   };
+  useEffect(() => {
+    setIsLoading(contacts ? false : true);
+  }, [contacts]);
 
-  return (
-    <div className="overflow-y-auto h-[calc(100vh-66px)]  w-full">
-      <div className="flex h-full w-full flex-wrap p-4 items-start justify-center gap-x-7 gap-y-4 ">
-        {contacts ? (
-          contacts.map((contact) => (
-            <article className="rounded-xl w-[400px] border border-gray-600 bg-gray-700 p-4">
-              <div className="flex items-center gap-4">
-                <img
-                  alt=""
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-M0nVMzpCwEDhb-uCQe5T4GNTC5W97z-VWg&s"
-                  className="size-16 rounded-full object-cover"
-                />
+  if (isLoading) {
+    return <Loading />;
+  } else if (!isLoading)
+    return (
+      <div className="overflow-y-auto h-[calc(100vh-66px)]  w-full">
+        <div className="flex h-full w-full flex-wrap p-4 items-start justify-center gap-x-7 gap-y-4 ">
+          {contacts ? (
+            contacts.map((contact) => (
+              <article className="rounded-xl w-[400px] border border-gray-600 bg-gray-700 p-4">
+                <div className="flex items-center gap-4">
+                  <img
+                    alt=""
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-M0nVMzpCwEDhb-uCQe5T4GNTC5W97z-VWg&s"
+                    className="size-16 rounded-full object-cover"
+                  />
 
+                  <div>
+                    <h3 className="text-lg font-medium text-white">
+                      {contact.username.toUpperCase()}
+                    </h3>
+
+                    <ul className="-m-1 flex flex-wrap">
+                      <li className="p-1 leading-none">
+                        <span
+                          href="#"
+                          className="text-xs font-medium text-gray-300">
+                          {contact.email}
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="mt-4 space-y-2">
+                  <div
+                    href="#"
+                    className="block h-full rounded-lg border border-gray-600 p-3 ">
+                    <p className="mt-1 text-sm font-medium text-gray-300">
+                      {contact.message}
+                    </p>
+                  </div>
+                </div>
                 <div>
-                  <h3 className="text-lg font-medium text-white">
-                    {contact.username.toUpperCase()}
-                  </h3>
-
-                  <ul className="-m-1 flex flex-wrap">
-                    <li className="p-1 leading-none">
-                      <span
-                        href="#"
-                        className="text-xs font-medium text-gray-300">
-                        {contact.email}
-                      </span>
-                    </li>
-                  </ul>
+                  <button
+                    onClick={() => deleteUser(contact._id)}
+                    className="text-[16px] py- px-4 rounded-lg border bg-gray-500 border-gray-700 hover:border-pink-600">
+                    Delete
+                  </button>
                 </div>
+              </article>
+            ))
+          ) : (
+            <div>
+              <div className=" w-full h-full flex justify-center items-center ">
+                <h3 className="text-3xl text-gray-300">
+                  No contacts availabale!
+                </h3>
               </div>
-
-              <div className="mt-4 space-y-2">
-                <div
-                  href="#"
-                  className="block h-full rounded-lg border border-gray-600 p-3 ">
-                  <p className="mt-1 text-sm font-medium text-gray-300">
-                    {contact.message}
-                  </p>
-                </div>
-              </div>
-              <div>
-                <button
-                  onClick={() => deleteUser(contact._id)}
-                  className="text-[16px] py- px-4 rounded-lg border bg-gray-500 border-gray-700 hover:border-pink-600">
-                  Delete
-                </button>
-              </div>
-            </article>
-          ))
-        ) : (
-          <div>
-            <div className=" w-full h-full flex justify-center items-center ">
-              <h3 className="text-3xl text-gray-300">
-                No contacts availabale!
-              </h3>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </div>
-  );
+    );
 }

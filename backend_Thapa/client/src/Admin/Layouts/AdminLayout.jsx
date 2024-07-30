@@ -1,8 +1,9 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigation } from "react-router-dom";
 import SideMenu from "../components/SideMenu";
 
 export default function AdminLayout() {
+  // const navigation = useNavigation();
   return (
     <div className="text-3xl text-white flex ">
       {" "}
