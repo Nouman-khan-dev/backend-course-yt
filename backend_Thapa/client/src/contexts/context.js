@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from "react";
 const tokenContext = createContext({
   token: localStorage.getItem("token"),
   isLogedIn: false,
-  user: {},
+  user: null,
 
   storeTokenInLS: (token) => {
     localStorage.setItem("token", token);

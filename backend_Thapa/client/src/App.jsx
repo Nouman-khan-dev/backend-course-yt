@@ -54,7 +54,7 @@ export default function App() {
   return (
     <>
       <div className="w-screen bg-gray-800">
-        <div className="min-h-screen min-w-screen mx-auto max-w-[1350px] bg-gray-800">
+        <div className="min-h-screen min-w-screen mx-auto max-w-[1350px] bg-gray-800 border-x border-gray-900 ">
           <TokenProvider
             value={{
               token,

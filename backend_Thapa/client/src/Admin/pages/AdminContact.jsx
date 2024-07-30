@@ -49,14 +49,10 @@ export default function AdminContact() {
       },
     });
     const data = await response.json();
-    console.log("data", data);
-    console.log("response", response);
 
     if (response.ok) {
       setContacts(data.data);
-      console.log(contacts);
     } else {
-      console.log(data.message);
       showErrorToast(data.message);
     }
     try {
@@ -87,7 +83,6 @@ export default function AdminContact() {
         setContacts(contacts.filter((cntnct) => cntnct._id !== id));
         showSuccessToast("Deleted successfully");
       } else {
-        console.log(await response.json());
         showErrorToast("Could not deleted contact");
       }
     } catch (error) {
