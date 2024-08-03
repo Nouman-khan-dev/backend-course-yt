@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { TokenProvider, useAuthToken } from "../contexts/context";
 import { Bounce, toast } from "react-toastify";
-//
-//
-//
+
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isLogedIn, setIslogedIn, removeTokenFromLS } =
@@ -57,11 +55,7 @@ export default function Header() {
           to="/">
           <span className="sr-only">Home</span>
 
-          <img
-            className="size-14"
-            src="./public/logo.png"
-            alt="Logo"
-          />
+          <img className="size-14" src="/logo.png" alt="Logo" />
         </Link>
 
         <div className="flex  flex-1 items-center justify-end md:justify-between">

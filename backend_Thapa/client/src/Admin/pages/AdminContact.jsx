@@ -102,7 +102,9 @@ export default function AdminContact() {
         <div className="flex h-fit w-full flex-wrap  p-4 items-start justify-center gap-x-7 gap-y-4 ">
           {contacts ? (
             contacts.map((contact) => (
-              <article className="rounded-xl w-[400px] border border-gray-600 bg-gray-700 p-2 md:p-4">
+              <article
+                key={contact._id}
+                className="rounded-xl w-[400px] border border-gray-600 bg-gray-700 p-2 md:p-4">
                 <div className="flex items-center gap-4">
                   <img
                     alt=""

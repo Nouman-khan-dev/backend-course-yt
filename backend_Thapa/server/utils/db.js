@@ -1,9 +1,11 @@
 import mongoose from "mongoose";
-const uri = "mongodb://localhost:27017/mernThapa";
+// const uri = "mongodb://localhost:27017/mernThapa";
 // const uri =
 //   "mongodb+srv://developernomi68:nouman12@cluster0.mongodb.net/backend";
-// const uri =
-//   "mongodb+srv://developernomi68:nouman12@cluster0.xrwhmrp.mongodb.net/MyDB";
+const URI =
+  "mongodb+srv://nomiofficial68:s9zYhexZ5hixMaa0@mydb.j1lmvfj.mongodb.net/?retryWrites=true&w=majority&appName=mydb";
+const uri =
+  "mongodb+srv://developernomi68:nouman12@cluster0.xrwhmrp.mongodb.net/newdb";
 // import { MongoClient, ServerApiVersion } from "mongodb";
 // const uri =
 //   "mongodb+srv://developernomi68:nouman12@cluster0.xrwhmrp.mongodb.net/";
@@ -41,7 +43,7 @@ const connectDb = async () => {
   // run();
   try {
     await mongoose
-      .connect(uri)
+      .connect(URI)
       .then(() => console.log("db connected"))
       .catch((err) =>
         console.log("error while db connection : ", err)
