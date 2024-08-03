@@ -55,7 +55,7 @@ function Register() {
         storeTokenInLS(jsonResponse.token);
 
         setIsLogedIn(true);
-        Navigate("/");
+        document.location.href = "/";
       } else if (!response.ok) {
         const errordetails = await jsonResponse.extraDetails;
         const errorMsg = await jsonResponse.message;

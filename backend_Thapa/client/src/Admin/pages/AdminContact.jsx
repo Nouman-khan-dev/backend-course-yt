@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Bounce, toast } from "react-toastify";
-import { useAuthToken } from "../../contexts/context";
 import Loading from "../../pages/Loading";
 
 export default function AdminContact() {
@@ -100,19 +99,19 @@ export default function AdminContact() {
   } else if (!isLoading)
     return (
       <div className="overflow-y-auto h-[calc(100vh-66px)]  w-full">
-        <div className="flex h-full w-full flex-wrap p-4 items-start justify-center gap-x-7 gap-y-4 ">
+        <div className="flex h-fit w-full flex-wrap  p-4 items-start justify-center gap-x-7 gap-y-4 ">
           {contacts ? (
             contacts.map((contact) => (
-              <article className="rounded-xl w-[400px] border border-gray-600 bg-gray-700 p-4">
+              <article className="rounded-xl w-[400px] border border-gray-600 bg-gray-700 p-2 md:p-4">
                 <div className="flex items-center gap-4">
                   <img
                     alt=""
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-M0nVMzpCwEDhb-uCQe5T4GNTC5W97z-VWg&s"
-                    className="size-16 rounded-full object-cover"
+                    className="size-12 md:size-16 rounded-full object-cover"
                   />
 
                   <div>
-                    <h3 className="text-lg font-medium text-white">
+                    <h3 className="text-sm md:text-lg font-medium text-white">
                       {contact.username.toUpperCase()}
                     </h3>
 
@@ -131,7 +130,7 @@ export default function AdminContact() {
                 <div className="mt-4 space-y-2">
                   <div
                     href="#"
-                    className="block h-full rounded-lg border border-gray-600 p-3 ">
+                    className="block h-full rounded-lg border border-gray-600 p-1 md:p-3 ">
                     <p className="mt-1 text-sm font-medium text-gray-300">
                       {contact.message}
                     </p>

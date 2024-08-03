@@ -70,7 +70,7 @@ function Register() {
         storeTokenInLS(jsonResponse.token);
         token = jsonResponse.token;
         setIsLogedIn(!!token);
-        // window.location.redirect("/");
+
         document.location.href = "/";
       } else if (!response.ok) {
         const errordetails = await jsonResponse.extraDetails;
@@ -88,13 +88,13 @@ function Register() {
   };
 
   return (
-    <div>
-      <h1 className="my-6 text-6xl font-bold text-center text-gray-50">
+    <div className="h-[76vh]">
+      <h1 className="my-6 text-5xl font-bold text-center text-gray-50 ">
         Login
       </h1>
 
       <div className="flex justify-center">
-        <div className="mx-auto max-w-screen-xl px-2 py-16 sm:px-2 lg:px-8 border-2 border-gray-200 rounded-2xl">
+        <div className="mx-auto max-w-screen-xl px-2 py-2 md:py-16 sm:px-2 lg:px-8 md:border-2 border-gray-200 rounded-2xl">
           <div className="mx-auto max-w-lg text-center ">
             <h1 className="text-2xl font-bold sm:text-3xl text-gray-100">
               Get started today!

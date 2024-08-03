@@ -31,7 +31,7 @@ export default function Services() {
         <h1 className="text-center text-4xl  py-4 font-bold text-white">
           Services
         </h1>
-        <div className="my-4 border-black  flex flex-wrap justify-center gap-y-7 gap-x-4">
+        <div className="my-4 border-black flex flex-wrap justify-center gap-y-7 gap-x-4">
           {services.map((item) => (
             // <article className="min-w-[300px] text-left max-w-[350px] basis[350px] flex-1 hover:animate-background rounded-xl bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s] dark:shadow-gray-700/25">
             //   <div className="rounded-[10px] bg-white px-4 !p-8 sm:p-6 dark:bg-gray-900 min-h-full">
@@ -57,7 +57,7 @@ export default function Services() {
             //   </div>
             // </article>
 
-            <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <div className="max-w-sm p-6 bg-white border flex-grow border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
               <a href="#">
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                   {item.service}
