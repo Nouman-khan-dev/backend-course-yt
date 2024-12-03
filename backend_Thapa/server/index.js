@@ -11,13 +11,13 @@ const port = 3000;
 
 app.use(express.json());
 
-const crosOptions = {
-  origin: "htttp://localhost:5173",
+const corsOptions = {
+  origin: "*",
   methods: "GET, POST , PUT ,DELETE, PATCH, HEAD",
   credentials: true,
 };
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 // app.use(errorMiddleware);
 app.use("/api/auth", authRoute);
